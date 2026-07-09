@@ -1,44 +1,34 @@
-// src/app/globalVariables.scss
-// ─────────────────────────────────────────────────────────────────────────────
-// Ironclad Roofing Co. — Brand Tokens
-//
-// THREE DISTINCT FONTS:
-//   $titleFont  → Barlow Condensed  — bold condensed display (hero h1, section titles)
-//   $headerFont → Outfit            — clean geometric sans   (nav, card titles, labels, CTAs)
-//   $textFont   → Inter             — refined humanist sans  (body copy, form text, paragraphs)
-//
-// Usage guide:
-//   h1, .hero headline              → $titleFont  (uppercase, tight tracking)
-//   h2, h3, nav links, btn text     → $headerFont (medium weight, normal case)
-//   p, label, input, small text     → $textFont   (regular/medium weight)
-// ─────────────────────────────────────────────────────────────────────────────
+// Ironclad Roofing — Brand Tokens
+// IDENTITY: Storm-ready iron — charcoal plate + rivet amber
+// FONTS: Russo One (display) · Titillium Web (UI) · Roboto (body)
 
-$titleFont:  var(--font-barlow-condensed), 'Barlow Condensed', sans-serif;
-$headerFont: var(--font-outfit),           'Outfit',           sans-serif;
-$textFont:   var(--font-inter),            'Inter',            sans-serif;
+$titleFont:  var(--font-title),  'Russo One',     sans-serif;
+$headerFont: var(--font-header), 'Titillium Web', sans-serif;
+$textFont:   var(--font-body),   'Roboto',        sans-serif;
 
-// ── Core Palette ─────────────────────────────────────────────────────────────
 $black:      #000000;
-$obsidian:   #0d1b2a;
-$blackflat:  #1a2a3a;
+$obsidian:   #16181d;   // iron plate
+$blackflat:  #23262e;
 $white:      #FFFFFF;
-$offwhite:   #f8fafc;
+$offwhite:   #f4f4f5;   // zinc wash
 
-// Greys (navy-tinted)
-$darkgrey:   #7a9bb5;
-$grey:       #4a6a85;
-$lightgrey:  #c8d8e8;
+$darkgrey:   #a1a1aa;
+$grey:       #71717a;
+$lightgrey:  #d4d4d8;
 
-// Brand Accent
-$orange:     #1d4ed8;
-$lightorange:#3b82f6;
-$darkorange: #1e3a8a;
+// Accent — rivet amber / storm warning
+$orange:     #d97706;
+$lightorange:#f59e0b;
+$darkorange: #92400e;
 
-// Legacy aliases
 $green:      $orange;
 $lightgreen: $lightorange;
 $darkgreen:  $darkorange;
-$blue:       #1e6fa8;
+$blue:       #57534e;
 
-// Error
-$danger-red: #ef4444;
+$radius-sm:  3px;
+$radius-md:  6px;
+$radius-lg:  10px;
+$radius-pill: 4px;
+
+$danger-red: #dc2626;

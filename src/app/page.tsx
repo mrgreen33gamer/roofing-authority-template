@@ -45,36 +45,42 @@ export default function HomePage() {
       title: "Roof Replacement",
       body: "Free on-roof inspection, flat-rate quote, and full tear-off installation. Most homes are done in a single day.",
       link: "/services/roof-replacement",
+      image: "/pages/home/services/replacement.jpg",
     },
     {
       icon: faCloudRain,
       title: "Storm Damage Restoration",
       body: "24/7 emergency tarping and full insurance claim handling after hail or wind damage — we meet the adjuster on-site.",
       link: "/services/storm-damage-restoration",
+      image: "/pages/home/services/storm.jpg",
     },
     {
       icon: faLayerGroup,
       title: "Roof Repair",
       body: "Same-day fixes for leaks, missing shingles, and flashing issues — most repairs completed in one visit.",
       link: "/services/roof-repair",
+      image: "/pages/home/services/repair.jpg",
     },
     {
       icon: faSearch,
       title: "Roof Inspection",
       body: "A thorough, honest on-roof assessment with full photo documentation — never just a guess from the ground.",
       link: "/services/roof-inspection",
+      image: "/pages/home/services/inspection.jpg",
     },
     {
       icon: faBroom,
       title: "Gutter Installation",
       body: "Seamless gutters sized right for your roofline — protects your foundation and fascia from water damage.",
       link: "/services/gutter-installation",
+      image: "/pages/home/services/gutters.jpg",
     },
     {
       icon: faBuilding,
       title: "Commercial Roofing",
       body: "Flat and low-slope roofing for warehouses, retail, and multi-family properties, with minimal business disruption.",
       link: "/services/commercial-roofing",
+      image: "/pages/home/services/commercial.jpg",
     },
   ];
 
@@ -208,112 +214,55 @@ export default function HomePage() {
     { icon: faUsers,         label: "Locally Owned",        sub: "Since 2010" },
   ];
 
+  // Storm-urgency rhythm: metrics → form early → services → CTA mid
   return (
     <main className={styles.pageWrapper}>
-
-      {/* 1. Hero */}
       <WelcomePage />
-
-      {/* 2. Scrolling trust strip — immediately after hero */}
       <TrustBar
         headline="Georgetown's trusted roofing company — GAF Master Elite® certified, insured, and warrantied on every job"
       />
-
-      {/* 3. Impact metrics — build credibility before pitching services */}
       <div className={styles.section}>
-        <ImpactMetrics
-          title="Numbers That Speak for Us"
-          metrics={metrics}
-          cityName="Georgetown"
-        />
+        <ImpactMetrics title="Numbers That Speak for Us" metrics={metrics} cityName="Georgetown" />
       </div>
-
-      {/* 4. Services grid */}
       <div className={styles.section}>
-        <ServiceCardComponent
-          heading="Complete Roofing Services for Your Home"
-          cards={services}
-        />
+        <Variant4 title="Request Service or a Free Quote" cityName="Georgetown" slug="/" spot="homepage-contact-form" formVariant={2} />
       </div>
-
-      {/* 5. Why Choose Us */}
       <div className={styles.section}>
-        <WhyChooseUs
-          cityName="Georgetown"
-          features={whyFeatures}
-          title="What Makes Ironclad Different"
-        />
+        <ServiceCardComponent heading="Complete Roofing Services for Your Home" cards={services} />
       </div>
-
-      {/* 14. Contact form — final conversion point */}
       <div className={styles.section}>
-        <Variant4
-          title="Request Service or a Free Quote"
-          cityName="Georgetown"
-          slug="/"
-          spot="homepage-contact-form"
-          formVariant={2}
-        />
+        <WhyChooseUs cityName="Georgetown" features={whyFeatures} title="What Makes Ironclad Different" />
       </div>
-
-      {/* 7. How it works — process after the CTA so urgency is set */}
+      <CTABanner
+        headline="Storm Damage? Leaking Roof? Call Now."
+        subline="Inspections, repairs, and replacements with insurance-aware documentation and clean tear-offs."
+        primaryText="Call (512) 900-6200"
+        primaryLink="tel:+15129006200"
+        secondaryText="Roof Inspection"
+        secondaryLink="/contact"
+        imageSrc="/pages/home/welcome/hero-main.jpg"
+       />
       <div className={styles.section}>
         <ProcessTimeline steps={processSteps} />
       </div>
-
-      {/* 8. Social proof — reviews before the guarantee promise */}
       <div className={styles.section}>
         <Testimonials testimonials={reviews} />
       </div>
-
-      {/* 9. Guarantee — peer validation already done, now make the promise */}
       <div className={styles.section}>
         <GuaranteeSection />
       </div>
-
-      {/* 6. Mid-page CTA — emergency hook before process details */}
-      <CTABanner
-        headline="Roof Damaged or Leaking? Call Us Right Now."
-        subline="Same-day and emergency service across Georgetown, Round Rock, Cedar Park, and all of Central Texas. Flat-rate pricing. 25-year warranty."
-        primaryText="Call (512) 900-6200"
-        primaryLink="tel:+15129006200"
-        secondaryText="Book Online"
-        secondaryLink="/contact"
-      />
-
-
-      {/* 10. Service areas */}
       <div className={styles.section}>
-        <LocalServiceAreas
-          cityName="Georgetown"
-          areas={localAreas}
-          servicePath=""
-          title="Serving All of Central Texas"
-        />
+        <LocalServiceAreas cityName="Georgetown" areas={localAreas} servicePath="" title="Serving All of Central Texas" />
       </div>
-
-      {/* 11. What to expect (detail reassurance — lower in page) */}
       <div className={styles.section}>
-        <WhatToExpect
-          sectionTitle="Every Service Call, Every Time"
-          expectations={expectations}
-        />
+        <WhatToExpect sectionTitle="Every Service Call, Every Time" expectations={expectations} />
       </div>
-
-      {/* 12. FAQ */}
       <div className={styles.section}>
-        <FAQ
-          cityName="Georgetown"
-          faq={faq}
-          title="Roofing Questions — Answered Straight"
-        />
+        <FAQ cityName="Georgetown" faq={faq} title="Roofing Questions — Answered Straight" />
       </div>
-
-      {/* 13. Blog preview — educational content before the final form */}
       <div className={styles.section}>
         <BlogPreviewGrid />
       </div>
-
     </main>
   );
 }
