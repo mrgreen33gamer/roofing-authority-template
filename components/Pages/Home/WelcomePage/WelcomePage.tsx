@@ -58,29 +58,65 @@ function EmberCanvas({ color = '#d97706' }: { color?: string }) {
   return <canvas ref={ref} className={styles.particleCanvas} aria-hidden="true" />;
 }
 
-function StormGauge({ target = 88 }: { target?: number }) {
-  const [fill, setFill] = useState(0);
+function StormReadinessDial({ target = 88 }: { target?: number }) {
+  const [ready, setReady] = useState(false);
   useEffect(() => {
-    const t = setTimeout(() => setFill(target), 700);
+    const t = setTimeout(() => setReady(true), 500);
     return () => clearTimeout(t);
-  }, [target]);
+  }, []);
+  // Arc sweep: map 0–100 → degrees of dial fill (max ~240°)
+  const sweep = Math.round((target / 100) * 240);
+
   return (
-    <div className={styles.thermo} aria-hidden="true">
-      <div className={styles.thermoColumn}>
-        <div className={styles.thermoTube}>
-          <motion.div
-            className={styles.thermoFill}
-            initial={{ height: '0%' }}
-            animate={{ height: `${fill}%` }}
-            transition={{ duration: 2.0, delay: 0.7, ease: [0.34, 1.2, 0.64, 1] }}
-          />
-        </div>
-        <div className={styles.thermoBulb} />
+    <div className={styles.stormDial} aria-hidden="true">
+      <div className={styles.roofSilhouette}>
+        <span className={styles.roofPeak} />
+        <span className={styles.roofLeft} />
+        <span className={styles.roofRight} />
+        <span className={styles.shingleRow} />
+        <span className={`${styles.shingleRow} ${styles.shingleRow2}`} />
+        <span className={`${styles.shingleRow} ${styles.shingleRow3}`} />
       </div>
-      <div className={styles.thermoLabels}>
-        <span className={styles.thermoTop}>Storm</span>
-        <span className={styles.thermoMid}>Ready</span>
-        <span className={styles.thermoBot}>Base</span>
+
+      <div className={styles.dialFace}>
+        <svg className={styles.dialSvg} viewBox="0 0 120 120">
+          <circle
+            className={styles.dialTrack}
+            cx="60"
+            cy="60"
+            r="48"
+            fill="none"
+            strokeWidth="8"
+          />
+          <motion.circle
+            className={styles.dialArc}
+            cx="60"
+            cy="60"
+            r="48"
+            fill="none"
+            strokeWidth="8"
+            strokeLinecap="round"
+            strokeDasharray={`${(sweep / 360) * 301.6} 301.6`}
+            initial={{ strokeDasharray: '0 301.6' }}
+            animate={{
+              strokeDasharray: ready
+                ? `${(sweep / 360) * 301.6} 301.6`
+                : '0 301.6',
+            }}
+            transition={{ duration: 1.8, delay: 0.35, ease: [0.34, 1.1, 0.64, 1] }}
+            transform="rotate(-210 60 60)"
+          />
+        </svg>
+        <div className={styles.dialCore}>
+          <span className={styles.dialValue}>{target}%</span>
+          <span className={styles.dialLabel}>Storm Ready</span>
+        </div>
+      </div>
+
+      <div className={styles.dialTicks}>
+        <span>Base</span>
+        <span>Pitch OK</span>
+        <span>Storm</span>
       </div>
     </div>
   );
@@ -203,7 +239,7 @@ export default function WelcomePage() {
           aria-hidden="true"
         >
           <div className={styles.console}>
-            <StormGauge target={88} />
+            <StormReadinessDial target={88} />
             <div className={styles.statGrid}>
               {stats.map((s, i) => (
                 <motion.div

@@ -278,70 +278,164 @@
   }
 }
 
-.thermo {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
+// ── Storm Readiness Dial ───────────────────────────────────────────────────
 
-.thermoColumn {
+.stormDial {
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 0.65rem;
+  min-width: 150px;
 }
 
-.thermoTube {
-  width: 28px;
-  height: 200px;
-  border: 2px solid rgba($white, 0.18);
-  border-radius: 20px 20px 0 0;
-  background: rgba($white, 0.04);
+.roofSilhouette {
+  position: relative;
+  width: 112px;
+  height: 42px;
+  margin-bottom: -0.15rem;
+}
+
+.roofPeak {
+  position: absolute;
+  left: 50%;
+  top: 2px;
+  width: 10px;
+  height: 10px;
+  background: $orange;
+  transform: translateX(-50%) rotate(45deg);
+  box-shadow: 0 0 10px rgba($orange, 0.45);
+  z-index: 2;
+}
+
+.roofLeft,
+.roofRight {
+  position: absolute;
+  top: 10px;
+  height: 3px;
+  background: linear-gradient(90deg, rgba($orange, 0.2), $orange, rgba($orange, 0.2));
+  border-radius: 2px;
+}
+
+.roofLeft {
+  left: 4px;
+  right: 50%;
+  transform: rotate(-18deg);
+  transform-origin: right center;
+}
+
+.roofRight {
+  left: 50%;
+  right: 4px;
+  transform: rotate(18deg);
+  transform-origin: left center;
+}
+
+.shingleRow {
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  height: 5px;
+  top: 22px;
+  border-radius: 1px;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba($orange, 0.55) 0 10px,
+      rgba($orange, 0.15) 10px 12px
+    );
+  opacity: 0.85;
+}
+
+.shingleRow2 {
+  top: 29px;
+  left: 18px;
+  right: 18px;
+  opacity: 0.65;
+}
+
+.shingleRow3 {
+  top: 36px;
+  left: 22px;
+  right: 22px;
+  opacity: 0.45;
+}
+
+.dialFace {
+  position: relative;
+  width: 140px;
+  height: 140px;
   display: flex;
-  align-items: flex-end;
-  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+}
+
+.dialSvg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.dialTrack {
+  stroke: rgba($white, 0.1);
+}
+
+.dialArc {
+  stroke: $orange;
+  filter: drop-shadow(0 0 6px rgba($orange, 0.55));
+}
+
+.dialCore {
   position: relative;
   z-index: 1;
-}
-
-.thermoFill {
-  width: 100%;
-  background: linear-gradient(180deg, $lightorange, $orange);
-  border-radius: 16px 16px 0 0;
-  box-shadow: 0 0 18px rgba($orange, 0.45);
-}
-
-.thermoBulb {
-  width: 48px;
-  height: 48px;
-  margin-top: -8px;
+  width: 88px;
+  height: 88px;
   border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, $lightorange, $orange 55%, #d35400);
-  box-shadow: 0 0 24px rgba($orange, 0.5);
-  border: 2px solid rgba($white, 0.12);
-}
-
-.thermoLabels {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  height: 220px;
-  padding: 0.25rem 0;
-  font-family: $textFont;
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: rgba($white, 0.45);
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+  background:
+    radial-gradient(circle at 35% 30%, rgba($lightorange, 0.18), transparent 55%),
+    linear-gradient(160deg, rgba(40, 28, 12, 0.95), rgba(18, 14, 10, 0.98));
+  border: 1px solid rgba($orange, 0.35);
+  box-shadow: inset 0 0 20px rgba($orange, 0.12), 0 8px 24px rgba(0, 0, 0, 0.35);
 }
 
-.thermoTop {
-  color: rgba($lightorange, 0.9);
+.dialValue {
+  font-family: $titleFont;
+  font-size: 1.55rem;
+  font-weight: 800;
+  color: $orange;
+  line-height: 1;
 }
-.thermoMid {
-  color: rgba($orange, 0.75);
+
+.dialLabel {
+  font-family: $textFont;
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba($white, 0.5);
+  text-align: center;
 }
-.thermoBot {
+
+.dialTicks {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 140px;
+  font-family: $textFont;
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   color: rgba($white, 0.35);
+
+  span:last-child {
+    color: rgba($orange, 0.85);
+  }
 }
 
 .statGrid {
@@ -433,3 +527,28 @@
 }
 
 /* end identity layer */
+
+/* === HERO PATTERN UNIQUENESS — roofing-authority-template === */
+.hero {
+  &::before {
+    content: '' !important;
+    position: absolute !important;
+    inset: 0 !important;
+    background-image: repeating-linear-gradient(29deg, transparent, transparent 14px, rgba($orange, 0.03) 14px, rgba($orange, 0.03) 15px),
+      repeating-linear-gradient(119deg, transparent, transparent 14px, rgba($white, 0.02) 14px, rgba($white, 0.02) 15px) !important;
+    background-size: auto !important;
+    opacity: 0.58 !important;
+    pointer-events: none !important;
+    z-index: 0 !important;
+  }
+
+  &::after {
+    content: '' !important;
+    position: absolute !important;
+    inset: 0 !important;
+    background-image: radial-gradient(ellipse 50% 40% at 18% 24%, rgba($orange, 0.036), transparent 70%), radial-gradient(ellipse 40% 50% at 59% 83%, rgba($white, 0.03), transparent 65%) !important;
+    pointer-events: none !important;
+    z-index: 0 !important;
+  }
+}
+/* end hero pattern */
