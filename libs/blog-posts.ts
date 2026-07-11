@@ -19,7 +19,7 @@ const ALL_POSTS: BlogPost[] = [
     category: 'Roof Replacement',
     date:     'April 18, 2026',
     readTime: 7,
-    imageSrc: '/pages/blogs/roof-replacement-signs.jpg',
+    imageSrc: '/pages/blogs/roof-replacement.jpg',
     imageAlt: 'Signs your roof needs replacing in Georgetown TX',
     featured: true,
   },
@@ -30,7 +30,7 @@ const ALL_POSTS: BlogPost[] = [
     category: 'Maintenance',
     date:     'April 14, 2026',
     readTime: 6,
-    imageSrc: '/pages/blogs/roof-inspection-schedule.jpg',
+    imageSrc: '/pages/blogs/roof-inspection.jpg',
     imageAlt: 'Roof inspection schedule guide for Central Texas homes',
   },
   {
@@ -40,7 +40,7 @@ const ALL_POSTS: BlogPost[] = [
     category: 'Materials',
     date:     'April 10, 2026',
     readTime: 8,
-    imageSrc: '/pages/blogs/metal-vs-shingle-roofing.jpg',
+    imageSrc: '/pages/blogs/storm-damage.jpg',
     imageAlt: 'Metal vs shingle roofing comparison for Texas homes',
   },
 ];

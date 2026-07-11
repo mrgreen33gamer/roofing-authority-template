@@ -35,7 +35,7 @@ const marqueeItems = [
   'Serving Central Texas Since 2010',
   'Licensed & Insured · Georgetown, TX',
 ];
-const footerLine = 'Licensed &amp; Insured · Georgetown, TX';
+const footerLine = 'Licensed & Insured · Georgetown, TX';
 const secondaryCtaLabel = 'Book Now';
 const secondaryCtaHref = '/contact';
 const hoursText = 'Mon–Sat · 7am–7pm';

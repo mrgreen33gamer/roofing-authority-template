@@ -55,7 +55,7 @@ export default function Page() {
       <BlogHero
         title="How Often Should You Get a Roof Inspection in Central Texas?"
         description="Hail, heat, and high winds all take a toll on Central Texas roofs. Here's the honest inspection schedule for Georgetown-area homes — and what happens when you skip it."
-        imageSrc="/pages/blogs/roof-inspection-schedule.jpg"
+        imageSrc="/pages/blogs/roof-inspection.jpg"
         imageAlt="Roof inspection schedule guide for Central Texas homes"
         category="Maintenance"
         date="April 14, 2026"

@@ -55,7 +55,7 @@ export default function Page() {
       <BlogHero
         title="Metal vs. Shingle Roofing: What Makes Sense for Texas Homes in 2026?"
         description="Metal roofing is everywhere in Central Texas right now — but is it right for your home and budget? Real pros, cons, and costs for Georgetown-area homeowners."
-        imageSrc="/pages/blogs/metal-vs-shingle-roofing.jpg"
+        imageSrc="/pages/blogs/storm-damage.jpg"
         imageAlt="Metal vs shingle roofing comparison for Texas homes"
         category="Materials"
         date="April 10, 2026"

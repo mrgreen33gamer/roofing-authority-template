@@ -57,7 +57,7 @@ export default function Page() {
       <BlogHero
         title="7 Signs Your Roof Needs Replacing in Georgetown, TX (Not Just Repairing)"
         description="Central Texas weather is brutal on roofs. Here are the 7 clear warning signs it's time to replace — not just repair — before your next storm."
-        imageSrc="/pages/blogs/roof-replacement-signs.jpg"
+        imageSrc="/pages/blogs/roof-replacement.jpg"
         imageAlt="Signs your roof needs replacing in Georgetown TX"
         category="Roof Replacement"
         date="April 18, 2026"
