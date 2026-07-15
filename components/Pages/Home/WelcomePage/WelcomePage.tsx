@@ -1,9 +1,11 @@
 // Ironclad Roofing Hero — Storm-ready photo command
-// Full-bleed roof photography + shingle-gauge meter + photo strip.
-// Distinct from HVAC climate console (no snowflakes; iron/amber system).
+// Photographic parallax roof scene + an authentic roofer photo card replaces the
+// abstract storm-readiness dial. Real imagery, iron plate + rivet-amber system.
+// Photos live in /public/pages/home/welcome and ship with the template.
 'use client';
-import React, { useEffect, useRef, useState } from 'react';
-import { motion } from 'framer-motion';
+import React, { useEffect, useRef } from 'react';
+import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
+import Image from 'next/image';
 import Link from 'next/link';
 import { PhoneIcon, ChevronIcon, CheckIcon } from './_shared/icons';
 import styles from './styles.module.scss';
@@ -58,70 +60,6 @@ function EmberCanvas({ color = '#d97706' }: { color?: string }) {
   return <canvas ref={ref} className={styles.particleCanvas} aria-hidden="true" />;
 }
 
-function StormReadinessDial({ target = 88 }: { target?: number }) {
-  const [ready, setReady] = useState(false);
-  useEffect(() => {
-    const t = setTimeout(() => setReady(true), 500);
-    return () => clearTimeout(t);
-  }, []);
-  // Arc sweep: map 0–100 → degrees of dial fill (max ~240°)
-  const sweep = Math.round((target / 100) * 240);
-
-  return (
-    <div className={styles.stormDial} aria-hidden="true">
-      <div className={styles.roofSilhouette}>
-        <span className={styles.roofPeak} />
-        <span className={styles.roofLeft} />
-        <span className={styles.roofRight} />
-        <span className={styles.shingleRow} />
-        <span className={`${styles.shingleRow} ${styles.shingleRow2}`} />
-        <span className={`${styles.shingleRow} ${styles.shingleRow3}`} />
-      </div>
-
-      <div className={styles.dialFace}>
-        <svg className={styles.dialSvg} viewBox="0 0 120 120">
-          <circle
-            className={styles.dialTrack}
-            cx="60"
-            cy="60"
-            r="48"
-            fill="none"
-            strokeWidth="8"
-          />
-          <motion.circle
-            className={styles.dialArc}
-            cx="60"
-            cy="60"
-            r="48"
-            fill="none"
-            strokeWidth="8"
-            strokeLinecap="round"
-            strokeDasharray={`${(sweep / 360) * 301.6} 301.6`}
-            initial={{ strokeDasharray: '0 301.6' }}
-            animate={{
-              strokeDasharray: ready
-                ? `${(sweep / 360) * 301.6} 301.6`
-                : '0 301.6',
-            }}
-            transition={{ duration: 1.8, delay: 0.35, ease: [0.34, 1.1, 0.64, 1] }}
-            transform="rotate(-210 60 60)"
-          />
-        </svg>
-        <div className={styles.dialCore}>
-          <span className={styles.dialValue}>{target}%</span>
-          <span className={styles.dialLabel}>Storm Ready</span>
-        </div>
-      </div>
-
-      <div className={styles.dialTicks}>
-        <span>Base</span>
-        <span>Pitch OK</span>
-        <span>Storm</span>
-      </div>
-    </div>
-  );
-}
-
 const GALLERY = [
   { src: '/pages/home/welcome/hero-roof.jpg', alt: 'Residential roof line', label: 'Replace' },
   { src: '/pages/home/welcome/hero-shingles.jpg', alt: 'Architectural shingles', label: 'Shingles' },
@@ -129,6 +67,17 @@ const GALLERY = [
 ];
 
 export default function WelcomePage() {
+  const reduceMotion = useReducedMotion();
+  const heroRef = useRef<HTMLElement>(null);
+
+  // Scroll-linked parallax on the background photo. Disabled under reduced-motion.
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ['start start', 'end start'],
+  });
+  const bgY = useTransform(scrollYProgress, [0, 1], ['0%', reduceMotion ? '0%' : '16%']);
+  const bgScale = useTransform(scrollYProgress, [0, 1], [1.06, reduceMotion ? 1.06 : 1.16]);
+
   const badgeText = "Georgetown's Most Trusted Roofer — Since 2010";
   const headlineLines = ['Built to Last.', 'Built for Storms.'];
   const headlineAccent = 'Ironclad Roofing.';
@@ -137,19 +86,26 @@ export default function WelcomePage() {
   const primaryCta = { label: 'Call (512) 900-6200', href: 'tel:+15129006200' };
   const secondaryCta = { label: 'Free Estimate', href: '/contact' };
   const chips = ['Same-Day Service', 'No Contracts', 'GAF Master Elite®', '15+ Yrs Local', '25-Yr Warranty'];
-  const stats = [
-    { value: '2,400+', label: 'Roofs Restored' },
-    { value: '4.9 ★', label: 'Google Rating' },
-    { value: '25-Year', label: 'Warranty Included' },
-    { value: 'Same-Day', label: 'Inspections' },
-  ];
 
   return (
-    <section className={styles.hero} aria-label="Hero">
-      <div className={styles.photoBg} aria-hidden="true">
-        <img src="/pages/home/welcome/hero-main.jpg" alt="" className={styles.photoBgImg} />
-        <div className={styles.photoBgScrim} />
-      </div>
+    <section ref={heroRef} className={styles.hero} aria-label="Hero">
+      {/* Photographic parallax background — wide roof scene at dusk */}
+      <motion.div
+        className={styles.bgLayer}
+        style={{ y: bgY, scale: bgScale }}
+        aria-hidden="true"
+      >
+        <Image
+          src="/pages/home/welcome/hero-roof.jpg"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className={styles.bgImage}
+        />
+      </motion.div>
+      {/* Iron + amber scrim keeps the headline legible and on-brand */}
+      <div className={styles.photoBgScrim} aria-hidden="true" />
 
       <EmberCanvas color="#d97706" />
 
@@ -231,28 +187,36 @@ export default function WelcomePage() {
           </motion.div>
         </div>
 
+        {/* Authentic roofer photo — the ownable image, framed as a spec card */}
         <motion.div
           className={styles.visual}
-          initial={{ opacity: 0, x: 30 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.7, delay: 0.28, ease: 'easeOut' }}
-          aria-hidden="true"
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.28, ease: 'easeOut' }}
         >
-          <div className={styles.console}>
-            <StormReadinessDial target={88} />
-            <div className={styles.statGrid}>
-              {stats.map((s, i) => (
-                <motion.div
-                  key={s.label}
-                  className={styles.statCard}
-                  initial={{ opacity: 0, y: 16 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.45, delay: 0.55 + i * 0.1 }}
-                >
-                  <span className={styles.statValue}>{s.value}</span>
-                  <span className={styles.statLabel}>{s.label}</span>
-                </motion.div>
-              ))}
+          <div className={styles.photoCard}>
+            <Image
+              src="/pages/home/welcome/hero-main.jpg"
+              alt="Ironclad Roofing crew member tearing off old shingles on a residential roof in Georgetown, TX"
+              fill
+              priority
+              sizes="(max-width: 960px) 88vw, 420px"
+              className={styles.photo}
+            />
+            <div className={styles.photoGlaze} aria-hidden="true" />
+
+            <div className={styles.photoBadge}>
+              <span className={styles.photoBadgeDot} />
+              GAF Master Elite® · On-Site
+            </div>
+
+            <div className={styles.specCard}>
+              <span className={styles.specRow}>
+                <CheckIcon size={10} /> Same-day inspections
+              </span>
+              <span className={styles.specRow}>
+                <CheckIcon size={10} /> 25-year workmanship warranty
+              </span>
             </div>
           </div>
         </motion.div>

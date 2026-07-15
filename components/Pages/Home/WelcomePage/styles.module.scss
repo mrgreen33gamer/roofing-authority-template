@@ -1,34 +1,46 @@
 // Ironclad Roofing — Storm photo command
+// Photographic parallax stage + authentic roofer photo card (replaces the
+// abstract storm-readiness dial). Iron plate + rivet-amber system.
 @use '../../../../src/app/globalVariables.scss' as *;
 
 .hero {
   position: relative;
-  min-height: 100svh;
+  min-height: 92svh;
+  height: auto;
   background: $obsidian;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  isolation: isolate;
 }
 
-.photoBg {
+// ── Photographic parallax background ──────────────────────────────────────────
+.bgLayer {
   position: absolute;
-  inset: 0;
+  top: -8%;
+  left: 0;
+  width: 100%;
+  height: 116%;
   z-index: 0;
+  will-change: transform;
 }
 
-.photoBgImg {
-  width: 100%;
-  height: 100%;
+.bgImage {
   object-fit: cover;
   object-position: center right;
-  transform: scale(1.04);
-  filter: saturate(0.85) brightness(0.55);
+  filter: saturate(0.9) brightness(0.62);
 }
 
+// Iron + amber scrim — darker on the left (text), lighter on the right (photo)
 .photoBgScrim {
   position: absolute;
   inset: 0;
+  z-index: 1;
+  pointer-events: none;
   background:
-    linear-gradient(105deg, rgba($obsidian, 0.94) 0%, rgba($obsidian, 0.82) 42%, rgba($obsidian, 0.45) 100%),
-    linear-gradient(0deg, rgba($obsidian, 0.75) 0%, transparent 40%);
+    radial-gradient(120% 90% at 84% 14%, rgba($orange, 0.18) 0%, rgba($orange, 0) 55%),
+    linear-gradient(105deg, rgba($obsidian, 0.95) 0%, rgba($obsidian, 0.84) 44%, rgba($obsidian, 0.5) 76%, rgba($obsidian, 0.4) 100%),
+    linear-gradient(0deg, rgba($obsidian, 0.78) 0%, rgba($obsidian, 0) 42%);
 }
 
 .particleCanvas {
@@ -36,19 +48,20 @@
   inset: 0;
   width: 100%;
   height: 100%;
-  z-index: 1;
+  z-index: 2;
   pointer-events: none;
 }
 
 .layout {
   position: relative;
-  z-index: 2;
+  z-index: 3;
   max-width: 1380px;
+  width: 100%;
   margin: 0 auto;
-  padding: clamp(6rem, 11vh, 9rem) clamp(1.5rem, 5vw, 5rem) clamp(4rem, 8vh, 6rem);
+  padding: clamp(6.95rem, 11vh, 8.95rem) clamp(1.5rem, 5vw, 5rem) clamp(4rem, 8vh, 6rem);
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(280px, 420px);
-  gap: clamp(2rem, 4vw, 4rem);
+  grid-template-columns: minmax(0, 1.06fr) minmax(300px, 440px);
+  gap: clamp(2.12rem, 4vw, 3.62rem);
   align-items: center;
 
   @media (max-width: 960px) {
@@ -80,7 +93,7 @@
   border: 1px solid rgba($orange, 0.35);
   background: rgba($orange, 0.12);
   backdrop-filter: blur(10px);
-  border-radius: 9999px;
+  border-radius: 12px;
   padding: 0.35rem 0.95rem;
   width: fit-content;
 }
@@ -110,12 +123,12 @@
 .headline {
   font-family: $titleFont;
   font-size: clamp(2.9rem, 5.5vw, 5.4rem);
-  font-weight: 600;
+  font-weight: 700;
   line-height: 0.92;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
+  letter-spacing: -0.01em;
   color: $white;
   margin: 0;
+  transform: skewX(-1deg);
   text-shadow: 0 2px 28px rgba(0, 0, 0, 0.35);
 }
 
@@ -153,7 +166,7 @@
   background: $orange;
   text-decoration: none;
   padding: 0.85rem 1.35rem;
-  border-radius: 8px;
+  border-radius: 4px;
   transition: background 0.18s, transform 0.16s;
   &:hover {
     background: $lightorange;
@@ -171,7 +184,7 @@
   color: rgba($white, 0.9);
   text-decoration: none;
   padding: 0.85rem 1.2rem;
-  border-radius: 8px;
+  border-radius: 4px;
   border: 1px solid rgba($white, 0.22);
   background: rgba($white, 0.06);
   backdrop-filter: blur(8px);
@@ -254,459 +267,155 @@
   background: linear-gradient(transparent, rgba($obsidian, 0.85));
 }
 
+// ── Authentic roofer photo card (replaces the storm-readiness dial) ───────────
 .visual {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 320px;
-}
-
-.console {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1.35rem;
-  padding: 1.5rem 1.35rem;
-  border-radius: 20px;
-  background: rgba($obsidian, 0.55);
-  border: 1px solid rgba($white, 0.12);
-  backdrop-filter: blur(16px);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
-  @media (max-width: 960px) {
-    flex-direction: column;
-  }
-}
-
-// ── Storm Readiness Dial ───────────────────────────────────────────────────
-
-.stormDial {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.65rem;
-  min-width: 150px;
-}
-
-.roofSilhouette {
-  position: relative;
-  width: 112px;
-  height: 42px;
-  margin-bottom: -0.15rem;
-}
-
-.roofPeak {
-  position: absolute;
-  left: 50%;
-  top: 2px;
-  width: 10px;
-  height: 10px;
-  background: $orange;
-  transform: translateX(-50%) rotate(45deg);
-  box-shadow: 0 0 10px rgba($orange, 0.45);
-  z-index: 2;
-}
-
-.roofLeft,
-.roofRight {
-  position: absolute;
-  top: 10px;
-  height: 3px;
-  background: linear-gradient(90deg, rgba($orange, 0.2), $orange, rgba($orange, 0.2));
-  border-radius: 2px;
-}
-
-.roofLeft {
-  left: 4px;
-  right: 50%;
-  transform: rotate(-18deg);
-  transform-origin: right center;
-}
-
-.roofRight {
-  left: 50%;
-  right: 4px;
-  transform: rotate(18deg);
-  transform-origin: left center;
-}
-
-.shingleRow {
-  position: absolute;
-  left: 14px;
-  right: 14px;
-  height: 5px;
-  top: 22px;
-  border-radius: 1px;
-  background:
-    repeating-linear-gradient(
-      90deg,
-      rgba($orange, 0.55) 0 10px,
-      rgba($orange, 0.15) 10px 12px
-    );
-  opacity: 0.85;
-}
-
-.shingleRow2 {
-  top: 29px;
-  left: 18px;
-  right: 18px;
-  opacity: 0.65;
-}
-
-.shingleRow3 {
-  top: 36px;
-  left: 22px;
-  right: 22px;
-  opacity: 0.45;
-}
-
-.dialFace {
-  position: relative;
-  width: 140px;
-  height: 140px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.dialSvg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.dialTrack {
-  stroke: rgba($white, 0.1);
-}
-
-.dialArc {
-  stroke: $orange;
-  filter: drop-shadow(0 0 6px rgba($orange, 0.55));
-}
-
-.dialCore {
-  position: relative;
-  z-index: 1;
-  width: 88px;
-  height: 88px;
-  border-radius: 50%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.2rem;
-  background:
-    radial-gradient(circle at 35% 30%, rgba($lightorange, 0.18), transparent 55%),
-    linear-gradient(160deg, rgba(40, 28, 12, 0.95), rgba(18, 14, 10, 0.98));
-  border: 1px solid rgba($orange, 0.35);
-  box-shadow: inset 0 0 20px rgba($orange, 0.12), 0 8px 24px rgba(0, 0, 0, 0.35);
-}
-
-.dialValue {
-  font-family: $titleFont;
-  font-size: 1.55rem;
-  font-weight: 800;
-  color: $orange;
-  line-height: 1;
-}
-
-.dialLabel {
-  font-family: $textFont;
-  font-size: 0.55rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: rgba($white, 0.5);
-  text-align: center;
-}
-
-.dialTicks {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  max-width: 140px;
-  font-family: $textFont;
-  font-size: 0.55rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: rgba($white, 0.35);
-
-  span:last-child {
-    color: rgba($orange, 0.85);
-  }
-}
-
-.statGrid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.75rem;
-  max-width: 260px;
-}
-
-.statCard {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-  padding: 0.9rem 1rem;
-  background: rgba($white, 0.06);
-  border: 1px solid rgba($white, 0.1);
-  border-radius: 12px;
-}
-
-.statValue {
-  font-family: $titleFont;
-  font-size: 1.45rem;
-  font-weight: 800;
-  color: $orange;
-  line-height: 1;
-}
-
-.statLabel {
-  font-family: $textFont;
-  font-size: 0.68rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: rgba($white, 0.55);
-}
-
-/* === UNIQUENESS IDENTITY LAYER — roofing-authority-template === */
-/* Auto-generated visual identity so shared archetypes diverge per brand. */
-
-.hero {
-  min-height: 92svh !important;
-  height: auto !important;
-}
-
-.layout {
-  grid-template-columns: minmax(0, 1.06fr) 1fr !important;
-  gap: clamp(2.12rem, 4vw, 3.62rem) !important;
-  padding-top: clamp(6.95rem, 11vh, 8.95rem) !important;
-}
-
-.shard {
-  clip-path: none !important;
-  opacity: 0.74 !important;
-}
-
-.headline {
-  letter-spacing: -0.01em !important;
-  text-transform: none !important;
-  font-weight: 700 !important;
-  transform: skewX(-1deg);
-}
-
-.badge {
-  border-radius: 12px !important;
-}
-
-.chip {
-  border-radius: 999px !important;
-}
-
-.ctaPrimary,
-.ctaSecondary {
-  border-radius: 4px !important;
-}
-
-.visual {
+  min-height: 340px;
   transform: scale(1.002);
 }
 
-.statCard,
-.console,
-.dialCard,
-.baFrame,
-.tile,
-.jobCard,
-.stripCard,
-.metricBar {
-  box-shadow: 0 8px 24px rgba(0,0,0,0.35) !important;
+.photoCard {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  aspect-ratio: 4 / 5;
+  border-radius: $radius-lg;
+  overflow: hidden;
+  border: 1px solid rgba($orange, 0.3);
+  box-shadow:
+    0 1px 0 rgba($white, 0.12) inset,
+    0 30px 60px -20px rgba(0, 0, 0, 0.7),
+    0 0 0 6px rgba($orange, 0.06);
 }
 
-/* end identity layer */
+.photo {
+  object-fit: cover;
+  object-position: center;
+}
 
-/* === HERO PATTERN UNIQUENESS — roofing-authority-template === */
-.hero {
-  &::before {
-    content: '' !important;
-    position: absolute !important;
-    inset: 0 !important;
-    background-image: repeating-linear-gradient(29deg, transparent, transparent 14px, rgba($orange, 0.03) 14px, rgba($orange, 0.03) 15px),
-      repeating-linear-gradient(119deg, transparent, transparent 14px, rgba($white, 0.02) 14px, rgba($white, 0.02) 15px) !important;
-    background-size: auto !important;
-    opacity: 0.58 !important;
-    pointer-events: none !important;
-    z-index: 0 !important;
-  }
+// Iron-to-amber glaze so the overlays stay readable
+.photoGlaze {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba($obsidian, 0) 42%, rgba($obsidian, 0.78) 100%),
+    linear-gradient(300deg, rgba($orange, 0.16) 0%, rgba($orange, 0) 46%);
+}
 
-  &::after {
-    content: '' !important;
-    position: absolute !important;
-    inset: 0 !important;
-    background-image: radial-gradient(ellipse 50% 40% at 18% 24%, rgba($orange, 0.036), transparent 70%), radial-gradient(ellipse 40% 50% at 59% 83%, rgba($white, 0.03), transparent 65%) !important;
-    pointer-events: none !important;
-    z-index: 0 !important;
+.photoBadge {
+  position: absolute;
+  top: 0.9rem;
+  left: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: $textFont;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: $white;
+  background: rgba($obsidian, 0.62);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba($orange, 0.32);
+  border-radius: $radius-pill;
+  padding: 0.4rem 0.85rem;
+}
+
+.photoBadgeDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: $lightorange;
+  box-shadow: 0 0 8px 1px rgba($lightorange, 0.8);
+  flex-shrink: 0;
+}
+
+.specCard {
+  position: absolute;
+  left: 0.9rem;
+  right: 0.9rem;
+  bottom: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  padding: 0.85rem 1rem;
+  border-radius: $radius-md;
+  background: rgba($obsidian, 0.6);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba($orange, 0.22);
+}
+
+.specRow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: $headerFont;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: rgba($white, 0.92);
+
+  svg {
+    color: $lightorange;
+    flex-shrink: 0;
   }
 }
-/* end hero pattern */
 
-/* === MOBILE HERO FOLD SAFETY (fleet QA) === */
+@media (max-width: 960px) {
+  .visual {
+    min-height: 0;
+    margin-top: 0.25rem;
+  }
+  .photoCard {
+    max-width: 360px;
+    aspect-ratio: 4 / 3;
+  }
+}
+
 @media (max-width: 640px) {
-  .hero,
-  .section,
-  .welcome {
+  .hero {
     min-height: 100svh;
-    height: auto !important;
-  }
-  .headline,
-  .title,
-  .heroTitle {
-    font-size: clamp(2.05rem, 9vw, 2.85rem) !important;
-    line-height: 1.05 !important;
-  }
-  .layout,
-  .heroInner,
-  .contentWrap {
-    gap: 1.25rem !important;
-    padding-bottom: 2rem !important;
-  }
-  .ctaRow,
-  .actions,
-  .heroCtas {
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-  .visual,
-  .heroVisual,
-  .meter,
-  .statGrid {
-    min-height: 0 !important;
-  }
-}
-
-/* === TABLET + MOBILE HERO VISUAL DEFER (fleet QA) === */
-/* Hide side dials/meters on tablet & phone so the hero fold stays clean */
-@media (max-width: 960px) {
-  .visual,
-  .heroVisual,
-  .meterWrap,
-  .rightCol,
-  .heroArt {
-    display: none !important;
-  }
-}
-
-/* === MOBILE HERO COPY TIGHTEN (fleet QA) === */
-@media (max-width: 640px) {
-  .sub,
-  .heroSub,
-  .description {
-    font-size: 0.9rem !important;
-    line-height: 1.45 !important;
-    max-width: 34ch !important;
-  }
-  .chips {
-    display: none !important; /* trust chips below fold on phone — CTAs first */
-  }
-}
-
-/* === MOBILE SINGLE COLUMN FORCE (fleet QA) === */
-@media (max-width: 960px) {
-  .layout,
-  .heroLayout,
-  .grid {
-    grid-template-columns: 1fr !important;
-  }
-}
-@media (max-width: 640px) {
-  .hero,
-  .section {
-    height: auto !important;
-    min-height: 100svh !important;
-    overflow: visible !important;
+    height: auto;
+    overflow: visible;
   }
   .layout {
-    padding-top: 5rem !important;
-    padding-bottom: 2rem !important;
+    padding-top: 5rem;
+    padding-bottom: 2rem;
+    gap: 1.25rem;
   }
-}
-
-/* === MOBILE WELCOME STACK (fleet QA) === */
-/* Kill side-by-side hero chrome on phone: stack CTAs, rails, collages, dials */
-@media (max-width: 640px) {
-  .ctaRow,
-  .actions,
-  .heroCtas {
-    flex-direction: column !important;
-    align-items: stretch !important;
-    width: 100% !important;
-    max-width: 22rem !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
+  .headline {
+    font-size: clamp(2.05rem, 9vw, 2.85rem);
+    line-height: 1.05;
   }
-
+  .sub {
+    font-size: 0.9rem;
+    line-height: 1.45;
+    max-width: 34ch;
+  }
+  .ctaRow {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    max-width: 22rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
   .ctaPrimary,
-  .ctaSecondary,
-  .ctaRow a,
-  .ctaRow button {
-    width: 100% !important;
-    justify-content: center !important;
-    box-sizing: border-box !important;
+  .ctaSecondary {
+    width: 100%;
+    justify-content: center;
+    box-sizing: border-box;
   }
-
-  .jobRail,
-  .jobStrip,
-  .shotRail {
-    display: grid !important;
-    grid-template-columns: 1fr !important;
-    gap: 0.65rem !important;
-    width: 100% !important;
-    max-width: 22rem !important;
-    margin: 0 auto !important;
+  .chips {
+    display: none; // trust chips below fold on phone — CTAs first
   }
-
-  .collageGrid,
-  .collage {
-    grid-template-columns: 1fr !important;
-    grid-template-rows: auto !important;
-    min-height: 0 !important;
-    max-width: 22rem !important;
-    width: 100% !important;
-  }
-
-  .tileMain,
-  .tileSide,
-  .tile {
-    grid-column: auto !important;
-    grid-row: auto !important;
-    min-height: 140px !important;
-  }
-
-  .plantDialGrid {
-    grid-template-columns: 1fr 1fr !important;
-    max-width: 100% !important;
-  }
-
-  .scanCard {
-    grid-template-columns: 1fr !important;
-    gap: 0.35rem !important;
-  }
-
-  .scanRight {
-    align-items: flex-start !important;
-  }
-
-  .materials,
-  .matGrid,
-  .swatchGrid {
-    grid-template-columns: 1fr 1fr !important;
-  }
-
-  .statGrid,
-  .statsRow {
-    grid-template-columns: 1fr 1fr !important;
+  .photoStrip {
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 22rem;
+    margin-left: auto;
+    margin-right: auto;
   }
 }
